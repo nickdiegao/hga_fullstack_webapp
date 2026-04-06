@@ -10,7 +10,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 INSTANCE_DIR = BASE_DIR / "instance"
 
 def create_app():
-    app = Flask(__name__, instance_path=str(INSTANCE_DIR), instance_relative_config=True)
+    app = Flask(
+        __name__,
+        instance_path=str(INSTANCE_DIR),
+        instance_relative_config=True,
+        template_folder="templates",
+        static_folder="static"
+    )
 
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "dev-key")
     app.config["SESSION_COOKIE_HTTPONLY"] = True
