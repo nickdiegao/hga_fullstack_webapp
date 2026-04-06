@@ -22,11 +22,11 @@
   <div class="top-actions">
     <button type="button" id="theme-toggle" class="btn btn-outline">🌗 Tema</button>
     {% if session_user %}
-      <a class="btn btn-outline" href="{{ url_for('dashboard') }}">Dashboard</a>
-      <a class="btn btn-outline" href="{{ url_for('profile') }}">Meu perfil</a>
-      <a class="btn btn-outline" href="{{ url_for('logout') }}">Sair</a>
+      <a class="btn btn-outline" href="{{ url_for('web.dashboard') }}">Dashboard</a>
+      <a class="btn btn-outline" href="{{ url_for('web.profile') }}">Meu perfil</a>
+      <a class="btn btn-outline" href="{{ url_for('web.logout') }}">Sair</a>
     {% else %}
-      <a class="btn btn-outline" href="{{ url_for('login') }}">Entrar</a>
+      <a class="btn btn-outline" href="{{ url_for('web.login') }}">Entrar</a>
     {% endif %}
   </div>
 </header>
