@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ hospital_name }}</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('web.static', filename='style.css') }}">
 </head>
 <body>
 <header class="topbar">
   <div class="brand-wrap">
     {% if logo_path %}
-      <img src="{{ url_for('static', filename=logo_path) }}" alt="Logomarca" class="brand-logo">
+      <img src="{{ url_for('web.static', filename=logo_path) }}" alt="Logomarca" class="brand-logo">
     {% else %}
       <div class="brand-logo brand-logo-placeholder">H</div>
     {% endif %}
@@ -35,7 +35,7 @@
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
       {% for category, message in messages %}
-        <div class="alert alert-{{ category }}">{{ message }}</div>
+        <div class="alert alert-{{ web.category }}">{{ message }}</div>
       {% endfor %}
     {% endif %}
   {% endwith %}

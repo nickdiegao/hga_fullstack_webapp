@@ -3,7 +3,7 @@
 <div class="grid two-col">
   <section class="card hero">
     <h1>Abrir chamado</h1>
-    <form method="post" action="{{ url_for('create_ticket') }}" class="form-grid">
+    <form method="post" action="{{ url_for('web.create_ticket') }}" class="form-grid">
       <label>Nome do solicitante *<input name="requester_name" required></label>
       <label>Setor *<input name="sector" required></label>
       <label class="full">Descrição do problema *<textarea name="description" rows="4" required></textarea></label>
@@ -24,7 +24,7 @@
 
   <section class="card">
     <h2>Acompanhar solicitação</h2>
-    <form method="get" action="{{ url_for('home') }}" class="inline-form">
+    <form method="get" action="{{ url_for('web.home') }}" class="inline-form">
       <input name="protocol" placeholder="Ex.: HGA-001">
       <button class="btn">Ver status</button>
     </form>

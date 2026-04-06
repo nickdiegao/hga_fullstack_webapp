@@ -6,9 +6,9 @@
     <p class="muted">Perfil: {{ session_user.role }}{% if session_user.company_name %} — {{ session_user.company_name }}{% endif %}</p>
   </div>
   <div class="toolbar">
-    <a class="btn btn-outline" href="{{ url_for('reports_view') }}">Relatórios</a>
+    <a class="btn btn-outline" href="{{ url_for('web.reports_view') }}">Relatórios</a>
     {% if session_user.role == 'master' %}
-      <a class="btn btn-outline" href="{{ url_for('settings_view') }}">Configurações</a>
+      <a class="btn btn-outline" href="{{ url_for('web.settings_view') }}">Configurações</a>
     {% endif %}
   </div>
 </div>
@@ -47,7 +47,7 @@
         <td>{{ t.company_name or 'Outros' }}</td>
         <td><span class="badge badge-{{ t.status|lower }}">{{ t.status }}</span></td>
         <td>{{ fmt(t.deadline_iso) }}</td>
-        <td><a class="btn btn-outline btn-small" href="{{ url_for('ticket_detail', ticket_id=t.id) }}">Detalhes</a></td>
+        <td><a class="btn btn-outline btn-small" href="{{ url_for('web.ticket_detail', ticket_id=t.id) }}">Detalhes</a></td>
       </tr>
       {% else %}
       <tr><td colspan="7">Nenhum chamado.</td></tr>

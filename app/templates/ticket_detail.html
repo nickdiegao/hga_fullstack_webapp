@@ -6,7 +6,7 @@
       <h1>Chamado {{ ticket.protocol }}</h1>
       <p class="muted">Empresa responsável: {{ company_display }}</p>
     </div>
-    <a class="btn btn-outline" href="{{ url_for('dashboard') }}">Voltar</a>
+    <a class="btn btn-outline" href="{{ url_for('web.dashboard') }}">Voltar</a>
   </div>
   <div class="detail-grid">
     <div><strong>Solicitante</strong><div>{{ ticket.requester_name }}</div></div>
