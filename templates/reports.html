@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+  <div class="dashboard-head">
+    <div>
+      <h1>Relatórios de atividades</h1>
+      <p class="muted">Fim do expediente: {{ '%02d'|format(end_of_day_hour) }}h</p>
+    </div>
+    <div class="toolbar">
+      <button class="btn btn-outline" onclick="window.print()">Imprimir / PDF</button>
+      <a class="btn btn-outline" href="{{ url_for('dashboard') }}">Voltar</a>
+    </div>
+  </div>
+
+  {% if session_user.role == 'company' %}
+  <form method="post" class="form-grid">
+    <label class="full">Observações do dia<textarea name="notes" rows="4"></textarea></label>
+    <button class="btn">Enviar relatório</button>
+  </form>
+  {% else %}
+  <form method="get" class="inline-form">
+    <select name="company_id">
+      <option value="">Todas as empresas</option>
+      {% for item in pending_companies %}
+        <option value="{{ item.id }}" {% if selected_company == item.id|string %}selected{% endif %}>{{ item.name }}</option>
+      {% endfor %}
+    </select>
+    <button class="btn">Filtrar</button>
+  </form>
+  <h2>Empresas pendentes de atualização</h2>
+  <table>
+    <thead><tr><th>Empresa</th><th>Pendentes</th><th>Sem atividade</th></tr></thead>
+    <tbody>
+      {% for item in pending_companies %}
+      <tr><td>{{ item.name }}</td><td>{{ item.pending_tickets or 0 }}</td><td>{{ item.no_activity or 0 }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>Histórico de relatórios</h2>
+  <table>
+    <thead><tr><th>Empresa</th><th>Data</th><th>Observações</th></tr></thead>
+    <tbody>
+      {% for report in reports %}
+      <tr><td>{{ report.company_name }}</td><td>{{ fmt(report.created_at) }}</td><td>{{ report.notes }}</td></tr>
+      {% else %}
+      <tr><td colspan="3">Nenhum relatório enviado.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

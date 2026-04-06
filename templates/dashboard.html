@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="dashboard-head">
+  <div>
+    <h1>Dashboard</h1>
+    <p class="muted">Perfil: {{ session_user.role }}{% if session_user.company_name %} — {{ session_user.company_name }}{% endif %}</p>
+  </div>
+  <div class="toolbar">
+    <a class="btn btn-outline" href="{{ url_for('reports_view') }}">Relatórios</a>
+    {% if session_user.role == 'master' %}
+      <a class="btn btn-outline" href="{{ url_for('settings_view') }}">Configurações</a>
+    {% endif %}
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><span>Total</span><strong>{{ tickets|length }}</strong></div>
+  <div class="stat"><span>Abertos</span><strong>{{ open_count }}</strong></div>
+  <div class="stat"><span>Em andamento</span><strong>{{ andamento_count }}</strong></div>
+  <div class="stat"><span>Concluídos</span><strong>{{ concl_count }}</strong></div>
+</div>
+
+{% if session_user.role in ['admin', 'master'] %}
+<section class="card">
+  <h2>Empresas pendentes de atualização</h2>
+  <table>
+    <thead><tr><th>Empresa</th><th>Chamados pendentes</th><th>Sem atividade</th></tr></thead>
+    <tbody>
+      {% for item in pending_companies %}
+      <tr><td>{{ item.name }}</td><td>{{ item.pending_tickets or 0 }}</td><td>{{ item.no_activity or 0 }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
+
+<section class="card">
+  <h2>Chamados</h2>
+  <table>
+    <thead><tr><th>Protocolo</th><th>Solicitante</th><th>Setor</th><th>Empresa</th><th>Status</th><th>Prazo</th><th></th></tr></thead>
+    <tbody>
+      {% for t in tickets %}
+      <tr>
+        <td>{{ t.protocol }}</td>
+        <td>{{ t.requester_name }}</td>
+        <td>{{ t.sector }}</td>
+        <td>{{ t.company_name or 'Outros' }}</td>
+        <td><span class="badge badge-{{ t.status|lower }}">{{ t.status }}</span></td>
+        <td>{{ fmt(t.deadline_iso) }}</td>
+        <td><a class="btn btn-outline btn-small" href="{{ url_for('ticket_detail', ticket_id=t.id) }}">Detalhes</a></td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7">Nenhum chamado.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

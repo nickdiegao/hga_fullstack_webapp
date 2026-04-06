@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card narrow">
+  <h1>Configurações do sistema</h1>
+  <form method="post" enctype="multipart/form-data" class="form-grid">
+    <label>Nome do hospital<input name="hospital_name" value="{{ hospital_name }}"></label>
+    <label>Créditos do desenvolvimento<textarea name="credits" rows="3">{{ credits }}</textarea></label>
+    <label>Aparência padrão
+      <select name="theme_default">
+        <option value="light" {% if default_theme == 'light' %}selected{% endif %}>Claro</option>
+        <option value="dark" {% if default_theme == 'dark' %}selected{% endif %}>Escuro</option>
+      </select>
+    </label>
+    <label>Fim do expediente (hora)<input name="end_of_day_hour" type="number" min="0" max="23" value="{{ end_of_day_hour }}"></label>
+    <label>Logomarca<input type="file" name="logo"></label>
+    <label class="checkline"><input type="checkbox" name="whatsapp_enabled" {% if whatsapp_enabled %}checked{% endif %}> Habilitar retorno por WhatsApp</label>
+    <button class="btn">Salvar</button>
+  </form>
+</section>
+{% endblock %}

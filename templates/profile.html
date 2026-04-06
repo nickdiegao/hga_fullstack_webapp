@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card narrow">
+  <h1>Meu perfil</h1>
+  <form method="post" class="form-grid">
+    <label>Nome de exibição
+      <input name="display_name" value="{{ full_user.display_name }}" {% if session_user.role == 'company' %}disabled{% endif %}>
+    </label>
+    {% if session_user.role == 'company' %}
+      <p class="muted">Usuário comum não pode editar nome de exibição.</p>
+    {% endif %}
+    <label>Login
+      <input name="username" value="{{ full_user.username }}">
+    </label>
+    <label>Senha atual<input type="password" name="current_password"></label>
+    <label>Nova senha<input type="password" name="new_password"></label>
+    <button class="btn">Salvar</button>
+  </form>
+</section>
+{% endblock %}

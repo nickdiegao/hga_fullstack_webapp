@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="grid two-col">
+  <section class="card hero">
+    <h1>Abrir chamado</h1>
+    <form method="post" action="{{ url_for('create_ticket') }}" class="form-grid">
+      <label>Nome do solicitante *<input name="requester_name" required></label>
+      <label>Setor *<input name="sector" required></label>
+      <label class="full">Descrição do problema *<textarea name="description" rows="4" required></textarea></label>
+      <label>Empresa responsável *
+        <select name="company_choice" id="company_choice" required>
+          <option value="">Selecione</option>
+          {% for company in companies %}
+            <option value="{{ company.id }}">{{ company.name }}</option>
+          {% endfor %}
+          <option value="other">Outros</option>
+        </select>
+      </label>
+      <label id="other_company_wrap" class="hidden">Nome da empresa (outros)<input name="company_other"></label>
+      <label class="full">Telefone do solicitante (opcional — para retorno da empresa por WhatsApp)<input name="requester_phone"></label>
+      <div class="full"><button class="btn">Abrir chamado</button></div>
+    </form>
+  </section>
+
+  <section class="card">
+    <h2>Acompanhar solicitação</h2>
+    <form method="get" action="{{ url_for('home') }}" class="inline-form">
+      <input name="protocol" placeholder="Ex.: HGA-001">
+      <button class="btn">Ver status</button>
+    </form>
+    {% if tracking %}
+      <div class="status-box">
+        <div><strong>Protocolo:</strong> {{ tracking.protocol }}</div>
+        <div><strong>Status:</strong> {{ tracking.status }}</div>
+        <div><strong>Abertura:</strong> {{ fmt(tracking.created_at) }}</div>
+        <div><strong>Prazo:</strong> {{ fmt(tracking.deadline_iso) }}</div>
+        <div><strong>Conclusão:</strong> {{ fmt(tracking.closed_at) }}</div>
+      </div>
+    {% endif %}
+  </section>
+</div>
+<script>
+  const companySelect = document.getElementById('company_choice');
+  const otherWrap = document.getElementById('other_company_wrap');
+  function syncOther() {
+    otherWrap.classList.toggle('hidden', companySelect.value !== 'other');
+  }
+  companySelect.addEventListener('change', syncOther);
+  syncOther();
+</script>
+{% endblock %}

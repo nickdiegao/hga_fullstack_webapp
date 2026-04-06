@@ -1,0 +1,74 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #16202a;
+  --muted: #5f6b76;
+  --line: #d8e0e8;
+  --brand: #0d6b6f;
+  --brand-2: #0b5255;
+  --danger: #b42318;
+  --success: #0f8b4c;
+}
+:root[data-theme='dark'] {
+  --bg: #0f1720;
+  --card: #18212b;
+  --text: #edf2f7;
+  --muted: #b2bcc7;
+  --line: #2d3945;
+  --brand: #2eb7bd;
+  --brand-2: #21969b;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Arial, Helvetica, sans-serif; background: var(--bg); color: var(--text); }
+a { color: inherit; text-decoration: none; }
+.container { width: min(1100px, calc(100% - 32px)); margin: 24px auto 40px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 24px; background: var(--card); border-bottom: 1px solid var(--line); }
+.brand-wrap { display: flex; align-items: center; gap: 16px; }
+.brand-logo { width: 80px; height: 80px; object-fit: contain; border-radius: 18px; background: #fff; border: 1px solid var(--line); }
+.brand-logo-placeholder { display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700;background:var(--brand);color:#fff; }
+.brand-title { font-size: 30px; font-weight: 800; letter-spacing: .02em; }
+.brand-subtitle { color: var(--muted); }
+.top-actions, .toolbar { display: flex; gap: 10px; flex-wrap: wrap; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; box-shadow: 0 8px 28px rgba(0,0,0,.04); margin-bottom: 18px; }
+.hero h1, .card h1, .card h2 { margin-top: 0; }
+.narrow { max-width: 560px; margin: 0 auto; }
+.grid.two-col { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid .full { grid-column: 1 / -1; }
+label { display: grid; gap: 6px; font-weight: 600; }
+input, select, textarea, button { font: inherit; }
+input, select, textarea { width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); background: transparent; color: var(--text); }
+.btn { background: var(--brand); color: #fff; border: 0; padding: 11px 16px; border-radius: 12px; cursor: pointer; }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.btn-small { padding: 7px 10px; font-size: 14px; }
+.alert { padding: 12px 14px; border-radius: 12px; margin-bottom: 14px; }
+.alert-success { background: rgba(15,139,76,.12); color: var(--success); }
+.alert-danger { background: rgba(180,35,24,.12); color: var(--danger); }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+.stat span, .muted { color: var(--muted); }
+.stat strong { display: block; font-size: 28px; margin-top: 6px; }
+.dashboard-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.badge { display: inline-block; padding: 5px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
+.badge-aberto { background: #fff0c2; color: #8a6400; }
+.badge-em_andamento { background: #dbeafe; color: #1246a1; }
+.badge-concluido { background: #dcfce7; color: #0b6b39; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.detail-grid .full { grid-column: 1 / -1; }
+.log-item { border-left: 4px solid var(--brand); padding: 8px 0 8px 12px; margin-bottom: 12px; }
+.inline-form { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.status-box { border: 1px dashed var(--line); padding: 14px; border-radius: 14px; margin-top: 12px; display: grid; gap: 8px; }
+.hidden { display: none; }
+.checkline { display: flex; align-items: center; gap: 10px; }
+.footer { padding: 22px; text-align: center; color: var(--muted); border-top: 1px solid var(--line); }
+@media (max-width: 900px) {
+  .grid.two-col, .stats, .form-grid, .detail-grid { grid-template-columns: 1fr; }
+  .topbar, .dashboard-head { flex-direction: column; align-items: stretch; }
+}
+@media print {
+  .top-actions, .toolbar, .btn, .btn-outline, form { display: none !important; }
+  body { background: #fff; color: #000; }
+  .card, .stat { box-shadow: none; border-color: #ccc; }
+}

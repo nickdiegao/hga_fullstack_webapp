@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card">
+  <div class="dashboard-head">
+    <div>
+      <h1>Chamado {{ ticket.protocol }}</h1>
+      <p class="muted">Empresa responsável: {{ company_display }}</p>
+    </div>
+    <a class="btn btn-outline" href="{{ url_for('dashboard') }}">Voltar</a>
+  </div>
+  <div class="detail-grid">
+    <div><strong>Solicitante</strong><div>{{ ticket.requester_name }}</div></div>
+    <div><strong>Setor</strong><div>{{ ticket.sector }}</div></div>
+    <div><strong>Status</strong><div>{{ ticket.status }}</div></div>
+    <div><strong>Prazo</strong><div>{{ fmt(ticket.deadline_iso) }}</div></div>
+    <div><strong>Telefone</strong><div>{{ requester_phone or '-' }}</div></div>
+    <div><strong>Criado em</strong><div>{{ fmt(ticket.created_at) }}</div></div>
+    <div class="full"><strong>Descrição</strong><div>{{ ticket.description }}</div></div>
+  </div>
+  {% if whatsapp_link %}
+    <p><a class="btn" target="_blank" href="{{ whatsapp_link }}">Responder por WhatsApp</a></p>
+  {% endif %}
+</section>
+
+{% if session_user.role == 'company' %}
+<section class="card">
+  <h2>Atualizar andamento</h2>
+  <p class="muted">A atualização do status é obrigatória ao abrir detalhes e registrar o andamento.</p>
+  <form method="post" class="form-grid">
+    <label>Status *
+      <select name="status" required>
+        <option value="">Selecione</option>
+        <option value="ABERTO">Aberto</option>
+        <option value="EM_ANDAMENTO">Em andamento</option>
+        <option value="CONCLUIDO">Concluído</option>
+      </select>
+    </label>
+    <label>Data do prazo *
+      <input type="date" min="{{ fixed_year }}-01-01" max="{{ fixed_year }}-12-31" name="deadline_date" required>
+    </label>
+    <label>Hora do prazo *
+      <input type="time" name="deadline_time" required>
+    </label>
+    <label class="full">Observação<textarea name="note" rows="3"></textarea></label>
+    <button class="btn">Salvar atualização</button>
+  </form>
+</section>
+{% endif %}
+
+<section class="card">
+  <h2>Histórico de atividades</h2>
+  {% for obs in observations %}
+    <div class="log-item">
+      <div><strong>{{ obs.display_name }}</strong> — {{ obs.status_after }}</div>
+      <div class="muted">{{ fmt(obs.created_at) }}</div>
+      <div>{{ obs.note or 'Sem observação.' }}</div>
+    </div>
+  {% else %}
+    <p>Nenhuma atividade registrada.</p>
+  {% endfor %}
+</section>
+{% endblock %}
