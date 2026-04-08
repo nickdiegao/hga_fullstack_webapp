@@ -387,9 +387,8 @@ def create_app():
             ),
         )
 
-        row = query_one("select protocol from tickets order by id desc limit 1")
-        flash(f"Chamado registrado com sucesso. Protocolo: {row['protocol']}", "success")
-        return redirect(url_for("home"))
+        protocol = row["protocol"]
+        return redirect(url_for("home", protocol=protocol))
 
     @app.route("/login", methods=["GET", "POST"])
     def login():
