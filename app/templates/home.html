@@ -28,15 +28,16 @@
       <input name="protocol" placeholder="Ex.: HGA-001">
       <button class="btn">Ver status</button>
     </form>
-    {% if tracking %}
-      <div class="status-box">
-        <div><strong>Protocolo:</strong> {{ tracking.protocol }}</div>
-        <div><strong>Status:</strong> {{ tracking.status }}</div>
-        <div><strong>Abertura:</strong> {{ fmt(tracking.created_at) }}</div>
-        <div><strong>Prazo:</strong> {{ fmt(tracking.deadline_iso) }}</div>
-        <div><strong>Conclusão:</strong> {{ fmt(tracking.closed_at) }}</div>
-      </div>
-    {% endif %}
+      {% if tracking %}
+        <div class="status-box">
+          <div><strong>Protocolo:</strong> {{ tracking.protocol }}</div>
+          <div><strong>Status:</strong> {{ tracking.status }}</div>
+
+          <div><strong>Abertura:</strong> {{ fmt(tracking.created_at) if tracking.created_at else '-' }}</div>
+          <div><strong>Prazo:</strong> {{ fmt(tracking.deadline_iso) if tracking.deadline_iso else '-' }}</div>
+          <div><strong>Conclusão:</strong> {{ fmt(tracking.closed_at) if tracking.closed_at else '-' }}</div>
+        </div>
+      {% endif %}
   </section>
 </div>
 <script>
